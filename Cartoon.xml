@@ -1,0 +1,205 @@
+<?xml version="1.0" ?>
+<project name="Cartoon" >
+    <assets>
+        <scenes>
+            <scene name="ToonShading" param="UNITIZE SWAP_YZ">
+                <file name="models/teapot.3ds"/>
+            </scene>
+            <scene name="ToonShading2" param="UNITIZE SWAP_YZ">
+                <file name="Models/sphere.obj"/>
+            </scene>
+            <scene name="Toonify" param="UNITIZE SWAP_YZ">
+                <file name="Models/sphere.obj"/>
+            </scene>
+            <scene name="Dot Shading" param="UNITIZE SWAP_YZ">
+                <file name="Models/sphere.obj"/>
+            </scene>
+            <scene name="Halftone" param="UNITIZE SWAP_YZ">
+                <file name="Models/plane.obj"/>
+            </scene>
+            <scene name="Silhouette" param="UNITIZE SWAP_YZ">
+                <file name="Models/teapot.3ds"/>
+            </scene>
+        </scenes>
+
+        <attributes>
+            <attribute type="RENDERER" name="Textura_Op" data="INT" value=0 />
+            <attribute type="RENDERER" name="cor1" data="VEC4" r=0 g=0 b=1 a=1 />
+            <attribute type="RENDERER" name="cor2" data="VEC4" r=0.2 g=0.4 b=0.6 a=1 />
+            <attribute type="RENDERER" name="cor3" data="VEC4" r=0.0 g=0.3 b=0.5 a=1 />
+            <attribute type="RENDERER" name="edge_thres" data="FLOAT" value=0.2 />
+            <attribute type="RENDERER" name="edge_thres2" data="FLOAT" value=5.0 />
+            <attribute type="RENDERER" name="glossiness" data="FLOAT" value=32 />
+            <attribute type="RENDERER" name="rimColor" data="VEC4" r=1 g=1 b=1 a=1 />
+            <attribute type="RENDERER" name="rimAmount" data="FLOAT" value=0.716 />
+            <attribute type="RENDERER" name="rimThreshold" data="FLOAT" value=0.1 />
+            <attribute type="RENDERER" name="grid_step" data="FLOAT" value=12.0 />
+            <attribute type="RENDERER" name="angle" data="FLOAT" value=20.0 />
+            <attribute type="RENDERER" name="frequency" data="FLOAT" value=40 />
+            <attribute type="RENDERER" name="toonlevels" data="INT" value=4/>
+        </attributes>
+
+        <viewports>
+            <viewport name="MainViewport">
+                <CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+            </viewport>
+        </viewports>
+
+        <cameras>
+            <camera name="MainCamera" >
+                <viewport name="MainViewport" />
+                <TYPE value="PERSPECTIVE"/>
+                <FOV value=60/>
+                <NEAR value= 0.1/>
+                <FAR value= 100/>
+                <POSITION x=-1.914014 y=0.492289 z=1.460414 />
+                <VIEW x=0.810088 y=-0.208939 z=-0.547815 />
+            </camera>
+            <camera name="Camera2" >
+                <viewport name="MainViewport" />
+                <TYPE value="PERSPECTIVE"/>
+                <FOV value=60/>
+                <NEAR value= 0.1/>
+                <FAR value= 100/>
+                <POSITION x=0 y=1.8 z=0.5 />
+                <VIEW x=0 y=-0.979861 z=-0.199683 />
+            </camera>
+        </cameras>
+
+        <lights>
+            <light name="Sun">
+                <DIRECTION x=2 y=-1 z=-2 />
+            </light>
+        </lights>
+
+        <materialLibs>
+            <materialLib filename="Cartoon.mlib" />
+        </materialLibs>
+    </assets>
+
+    <pipelines default="Toon Shading">
+        <pipeline name="Toon Shading" default="true">
+            <pass class="default" name="pass1">
+                <scenes>
+                    <scene name="ToonShading" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" toMaterial="toonShader" toLibrary="Cartoon" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Toon Shading 2" default="true">
+            <pass class="default" name="pass1">
+                <scenes>
+                    <scene name="ToonShading2" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" toMaterial="toonShader2" toLibrary="Cartoon" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Toonify" default="true">
+            <pass class="default" name="pass1">
+                <scenes>
+                    <scene name="Toonify" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" toMaterial="toonify" toLibrary="Cartoon" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Halftone" default="true">
+            <pass class="default" name="pass1">
+                <scenes>
+                    <scene name="Halftone" />
+                </scenes>
+                <camera name="Camera2" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" toMaterial="Halftone" toLibrary="Cartoon" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Dot Shading">
+            <pass class="default" name="Dot Shading">
+                <scenes>
+                    <scene name="Dot Shading" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" 
+                        toMaterial="Dot" toLibrary="Cartoon" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Silhouette">
+            <pass class="default" name="Silhouette">
+                <scenes>
+                    <scene name="Silhouette" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" 
+                        toMaterial="Silhouette" toLibrary="Cartoon" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+    </pipelines>
+
+    <interface> 
+        <window label="Settings">
+            <pipelineList label="effect" />
+            <var label="Textura" type="RENDERER" context="Cartoon"
+                component="Textura_Op" def="min=0 max=4 step=1" />
+            <var label="diffuse color" type="COLOR" context="Cartoon::toonShader2"
+                component="DIFFUSE" mode="COLOR" />
+            <var label="ambient color" type="COLOR" context="Cartoon::toonShader2"
+                component="AMBIENT" mode="COLOR" />
+            <var label="specular color" type="COLOR" context="Cartoon::toonShader2"
+                component="SPECULAR" mode="COLOR" />
+            <var label="Color" type="RENDERER" context="Cartoon::toonShader2"
+                component="cor3" mode="COLOR" />
+            <var label="Glossiness" type="RENDERER" context="Cartoon::toonShader2"
+                component="glossiness" def="min=0.0" />
+            <var label="Rim Color" type="RENDERER" context="Cartoon::toonShader2"
+                component="rimColor" mode="COLOR" />
+            <var label="Rim Amount" type="RENDERER" context="Cartoon::toonShader2"
+                component="rimAmount" def="min=0.0 max=1.0 step=0.1" />
+            <var label="Rim Threshold" type="RENDERER" context="Cartoon::toonShader2"
+                component="rimThreshold" def="min=0.0 max=1.0 step=0.1" />
+            <var label="Edge" type="RENDERER" context="Cartoon::toonify"
+                component="edge_thres" def="min=0.0 max=1.0 step=0.01" />
+            <var label="Shininess" type="COLOR" context="Cartoon::toonify"
+                component="SHININESS" def="min=0.0 max=128" />
+            <var label="grid_step" type="RENDERER" context="Cartoon::Halftone"
+                component="grid_step" def="min=0.0 max=100 step=0.1" />
+            <var label="angle" type="RENDERER" context="Cartoon::Halftone"
+                component="angle" def="min=0.0 max=90" />
+            <var label="Frequency" type="RENDERER" context="Cartoon::Halftone"
+                component="frequency" def="min=0.0 " />
+            <var label="Toon levels" type="RENDERER" context="Cartoon::toonShader" 
+					component="toonlevels" def="min=1 max=4 step=-1" />	
+        </window>
+    </interface>
+
+</project>

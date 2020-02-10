@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<project name="Technical" >
+    <assets>
+        <scenes>
+            <scene name="Gooch" param="UNITIZE SWAP_YZ">
+                <file name="Models/Teapot.3ds"/>
+            </scene>
+        </scenes>
+
+        <attributes>
+            <attribute type="RENDERER" name="tech_Color" data="INT" value=1.0/>
+        </attributes>
+
+
+        <viewports>
+            <viewport name="MainViewport">
+                <CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+            </viewport>
+        </viewports>
+
+        <cameras>
+            <camera name="MainCamera" >
+                <viewport name="MainViewport" />
+                <TYPE value="PERSPECTIVE"/>
+                <FOV value=60/>
+                <NEAR value= 0.1/>
+                <FAR value= 100/>
+                <POSITION x=-1.914014 y=0.492289 z=1.460414 />
+                <VIEW x=0.810088 y=-0.208939 z=-0.547815 />
+            </camera>
+        </cameras>
+
+        <lights>
+            <light name="Sun">
+                <DIRECTION x=2 y=-1 z=-2 />
+            </light>
+        </lights>
+
+        <materialLibs>
+            <materialLib filename="Technical.mlib" />
+        </materialLibs>
+    </assets>
+
+    <pipelines default="Gooch">
+        <pipeline name="Gooch">
+            <pass class="default" name="Gooch">
+                <scenes>
+                    <scene name="Gooch" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" 
+                        toMaterial="Gooch" toLibrary="Technical" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+    </pipelines>
+
+    <interface>
+        <window label="settings" >
+            <var label="tech_Color" type="RENDERER" context="Technical"
+                component="tech_Color" def="min=0 max=1 step=1" />
+        </window>
+    </interface>
+
+</project>

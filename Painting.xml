@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<project name="PAINTING" >
+    <assets>
+        <scenes>
+            <scene name="oil_painting" param="UNITIZE SWAP_YZ">
+                <file name="Models/sphere.obj"/>
+            </scene>
+            <scene name="pixel" param="UNITIZE SWAP_YZ">
+                <file name="Models/sphere.obj"/>
+            </scene>
+        </scenes>
+
+        <attributes>
+            <attribute type="RENDERER" name="Textura_Op" data="INT" value=0 />
+            <attribute type="RENDERER" name="uni_Radius" data="INT" value=2 />
+            <attribute type="RENDERER" name="pixel_size" data="INT" value=10 />
+        </attributes>
+
+        <viewports>
+            <viewport name="MainViewport">
+                <CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+            </viewport>
+        </viewports>
+
+        <cameras>
+            <camera name="MainCamera" >
+                <viewport name="MainViewport" />
+                <TYPE value="PERSPECTIVE"/>
+                <FOV value=60/>
+                <NEAR value= 0.1/>
+                <FAR value= 100/>
+                <POSITION x=-1.914014 y=0.492289 z=1.460414 />
+                <VIEW x=0.810088 y=-0.208939 z=-0.547815 />
+            </camera>
+        </cameras>
+
+        <lights>
+            <light name="Sun">
+                <DIRECTION x=2 y=-1 z=-2 />
+            </light>
+        </lights>
+
+        <materialLibs>
+            <materialLib filename="Painting.mlib" />
+        </materialLibs>
+    </assets>
+
+    <pipelines default="oil_painting">
+        <pipeline name="oil_painting" default="true">
+            <pass class="default" name="pass1">
+                <scenes>
+                    <scene name="oil_painting" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" toMaterial="oil_painting" toLibrary="Painting" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+
+        <pipeline name="Pixelated" default="true">
+            <pass class="default" name="pass1">
+                <scenes>
+                    <scene name="pixel" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" toMaterial="pixel" toLibrary="Painting" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+    </pipelines>
+
+    <interface>
+        <window label="settings" >
+            <pipelineList label="effect" />
+            <var label="Textura" type="RENDERER" context="Painting"
+                component="Textura_Op" def="min=0 max=4 step=1" />
+            <var label="Radius" type="RENDERER" context="Painting"
+                component="uni_Radius" def="min=0 step=1" />
+            <var label="Pixel Size" type="RENDERER" context="Painting"
+                component="pixel_size" def="min=0 step=1" />
+        </window>
+    </interface>
+
+</project>

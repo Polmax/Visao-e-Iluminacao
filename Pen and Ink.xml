@@ -1,0 +1,108 @@
+<?xml version="1.0" ?>
+<project name="Pen and Ink" >
+    <assets>
+        <scenes>
+            <scene name="Hatch Cruzado" param="UNITIZE SWAP_YZ">
+                <file name="models/Teapot.3ds"/>
+            </scene>
+            <scene name="Cross_Hatching" param="UNITIZE SWAP_YZ">
+                <file name="models/sphere.obj"/>
+            </scene>
+            <scene name="Hatching" param="UNITIZE SWAP_YZ">
+                <file name="models/Teapot.3ds"/>
+            </scene>
+        </scenes>
+
+        <attributes>
+            <attribute type="RENDERER" name="Textura_Op" data="INT" value=0 />
+            <attribute type="RENDERER" name="hatching" data="FLOAT" value=4.0/>
+            <attribute type="RENDERER" name="stripes_type" data="INT" value=0/>
+        </attributes>
+
+
+        <viewports>
+            <viewport name="MainViewport">
+                <CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+            </viewport>
+        </viewports>
+
+        <cameras>
+            <camera name="MainCamera" >
+                <viewport name="MainViewport" />
+                <TYPE value="PERSPECTIVE"/>
+                <FOV value=60/>
+                <NEAR value= 0.1/>
+                <FAR value= 100/>
+                <POSITION x=-1.914014 y=0.492289 z=1.460414 />
+                <VIEW x=0.810088 y=-0.208939 z=-0.547815 />
+            </camera>
+        </cameras>
+
+        <lights>
+            <light name="Sun">
+                <DIRECTION x=2 y=-1 z=-2 />
+            </light>
+        </lights>
+
+        <materialLibs>
+            <materialLib filename="Pen and Ink.mlib" />
+        </materialLibs>
+    </assets>
+
+    <pipelines default="Hatch Cruzado">
+        <pipeline name="Hatch Cruzado">
+            <pass class="default" name="hatching">
+                <scenes>
+                    <scene name="Hatch Cruzado" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" 
+                        toMaterial="Hatch Cruzado" toLibrary="Pen and Ink" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Cross_Hatching">
+            <pass class="default" name="Cross_Hatching">
+                <scenes>
+                    <scene name="Cross_Hatching" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" 
+                        toMaterial="Cross_Hatching" toLibrary="Pen and Ink" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+        <pipeline name="Hatching">
+            <pass class="default" name="Hatch3">
+                <scenes>
+                    <scene name="Hatching" />
+                </scenes>
+                <camera name="MainCamera" />
+                <lights>
+                    <light name="Sun" />
+                </lights>
+                <materialMaps>
+                    <map fromMaterial="*" 
+                        toMaterial="Hatching" toLibrary="Pen and Ink" />
+                </materialMaps>
+            </pass>
+        </pipeline>
+    </pipelines>
+
+    <interface>
+        <window label="settings" >
+            <pipelineList label="effect" />
+            <var label="Stripes Type" type="RENDERER" context="Pen and Ink::hatch3"
+                component="stripes_type" def="min=0 max=1 step=1" />
+        </window>
+    </interface>
+
+</project>
